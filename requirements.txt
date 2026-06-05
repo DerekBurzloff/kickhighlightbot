@@ -8,4 +8,3 @@ jinja2
 redis
 celery[redis]
 pydantic
-better-profanity

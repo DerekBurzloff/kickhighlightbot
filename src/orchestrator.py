@@ -17,8 +17,7 @@ class Orchestrator:
         try:
             messages = self.monitor.check_chat()
             for msg in messages:
-                # Process with advanced chat
-                result = self.chat.process_message("chat_user", msg)
+                result = self.chat.process_message("user", msg)
                 print(f"💬 {msg}")
 
                 if self.detector.detect(msg):
@@ -27,4 +26,4 @@ class Orchestrator:
                     if short:
                         self.uploader.upload(short)
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"❌ Cycle error: {e}")
