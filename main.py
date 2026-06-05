@@ -5,7 +5,7 @@ from src.highlight_detector import HighlightDetector
 from src.clip_processor import ClipProcessor
 from src.kick_monitor import KickMonitor
 
-app = FastAPI(title="KickHighlightBot - R6 Siege")
+app = FastAPI(title="KickHighlightBot")
 
 config = Config()
 detector = HighlightDetector()
@@ -22,6 +22,6 @@ async def root():
     }
 
 if __name__ == "__main__":
-    print("🚀 KickHighlightBot for kaesonnguns is now running!")
-    print("→ Dashboard: http://localhost:8000")
+    print("🚀 KickHighlightBot for kaesonnguns is running!")
+    print("Dashboard → http://localhost:8000")
     uvicorn.run(app, host="0.0.0.0", port=8000)
