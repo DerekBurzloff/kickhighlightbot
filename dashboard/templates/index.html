@@ -3,33 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KickHighlightBot Dashboard</title>
+    <title>KickHighlightBot • Live</title>
     <style>
-        body { font-family: system-ui; background: #0a0a0a; color: #fff; padding: 20px; margin: 0; }
-        h1 { color: #00ff9d; }
-        .status { color: #00ff00; font-weight: bold; }
-        .clip { background: #1f1f1f; padding: 12px; margin: 8px 0; border-radius: 8px; }
-        .clip a { color: #00ccff; text-decoration: none; }
-        .refresh { padding: 10px 20px; background: #00ff9d; color: black; border: none; border-radius: 6px; cursor: pointer; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+        .live-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #ff0066;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        
+        .card {
+            background: #111;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #222;
+        }
+        .clip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .clip {
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .clip:hover { transform: scale(1.03); }
+        .clip video {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .clip-info {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+        .status-live {
+            color: #ff0066;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
-    <h1>🚀 KickHighlightBot</h1>
-    <p><strong>Channel:</strong> {{ channel }} (Rainbow Six Siege)</p>
-    <p><strong>TikTok:</strong> @{{ tiktok }}</p>
-    <p><strong>Status:</strong> <span class="status">{{ status }}</span></p>
-
-    <h2>📼 Recent Clips ({{ recent_clips|length }})</h2>
-    {% if recent_clips %}
-        {% for clip in recent_clips %}
-        <div class="clip">
-            📹 <a href="/processed/{{ clip }}" target="_blank">{{ clip }}</a>
+    <div class="header">
+        <div>
+            <h1 style="margin:0; color:#00ff9d;">KickHighlightBot</h1>
+            <p style="margin:4px 0 0 0; color:#888;">Rainbow Six Siege • Live Highlights</p>
         </div>
-        {% endfor %}
-    {% else %}
-        <p>No clips yet. Start streaming and get some hype!</p>
-    {% endif %}
+        <div>
+            <span class="live-dot"></span>
+            <strong class="status-live">LIVE</strong> • {{ channel }}
+        </div>
+    </div>
 
-    <button class="refresh" onclick="location.reload()">Refresh Clips</button>
+    <div class="card">
+        <h2>📊 Status</h2>
+        <p><strong>Channel:</strong> {{ channel }}</p>
+        <p><strong>TikTok:</strong> @{{ tiktok }}</p>
+        <p><strong>Bot Status:</strong> <span style="color:#00ff00;">🟢 Online & Monitoring</span></p>
+    </div>
+
+    <h2>🎥 Recent Highlights</h2>
+    <div class="clip-grid">
+        {% if recent_clips %}
+            {% for clip in recent_clips %}
+            <div class="clip">
+                <video controls muted>
+                    <source src="/processed/{{ clip }}" type="video/mp4">
+                </video>
+                <div class="clip-info">
+                    {{ clip }}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No clips yet. Go live and get some hype in chat!</p>
+        {% endif %}
+    </div>
+
+    <p style="text-align:center; margin-top:40px; color:#555;">
+        Auto-detecting clutches, aces & insane plays • Powered by Grok
+    </p>
 </body>
 </html>
