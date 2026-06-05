@@ -17,35 +17,44 @@ async def dashboard(request: Request):
     <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="UTF-8">
         <title>KickHighlightBot • Live</title>
+        <meta charset="UTF-8">
         <style>
-            body {{ font-family: 'Inter', system-ui; background: #0a0a0a; color: #e0e0e0; margin: 0; padding: 20px; }}
-            .header {{ display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 20px; }}
+            body {{ font-family: system-ui, sans-serif; background: #0f0f0f; color: #e0e0e0; margin: 0; padding: 0; }}
+            .header {{ background: #1a1a1a; padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }}
+            .logo {{ font-size: 24px; font-weight: bold; color: #00ff9d; }}
             .status {{ color: #00ff9d; font-weight: bold; }}
-            .card {{ background: #1a1a1a; border-radius: 12px; padding: 20px; margin: 15px 0; }}
-            h1 {{ color: #00ff9d; }}
-            .clip {{ padding: 12px; background: #222; border-radius: 8px; margin: 8px 0; }}
+            .container {{ padding: 30px; max-width: 1200px; margin: 0 auto; }}
+            .card {{ background: #1a1a1a; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 1px solid #333; }}
+            .clip {{ background: #222; padding: 16px; border-radius: 8px; margin: 12px 0; }}
+            h1, h2 {{ color: #fff; }}
+            a {{ color: #00ccff; text-decoration: none; }}
+            a:hover {{ text-decoration: underline; }}
         </style>
     </head>
     <body>
         <div class="header">
-            <h1>🚀 KickHighlightBot</h1>
-            <div><span class="status">● LIVE</span></div>
+            <div class="logo">KickHighlightBot</div>
+            <div><span class="status">● LIVE</span> • Monitoring kaesonnguns</div>
         </div>
 
-        <div class="card">
-            <p><strong>Channel:</strong> {config.kick_username} (Rainbow Six Siege)</p>
-            <p><strong>TikTok:</strong> @{config.tiktok_username}</p>
-            <p><strong>Status:</strong> <span class="status">Online & Monitoring Chat</span></p>
-        </div>
+        <div class="container">
+            <div class="card">
+                <h2>Status</h2>
+                <p><strong>Channel:</strong> {config.kick_username} (Rainbow Six Siege)</p>
+                <p><strong>TikTok:</strong> @{config.tiktok_username}</p>
+                <p><strong>Bot Status:</strong> <span class="status">🟢 Online & Ready</span></p>
+            </div>
 
-        <h2>📼 Recent Highlights</h2>
-        {"".join([f'<div class="clip">📹 <a href="/processed/{clip}" target="_blank">{clip}</a></div>' for clip in recent_clips]) or "<p>No clips yet. Start streaming and get some hype in chat!</p>"}
-        
-        <p style="margin-top: 30px; color: #666; font-size: 0.9em;">
-            Bot is running 24/7 • Clips saved in /processed folder
-        </p>
+            <div class="card">
+                <h2>📼 Recent Highlights</h2>
+                {"".join([f'<div class="clip">📹 <a href="/processed/{clip}" target="_blank">{clip}</a></div>' for clip in recent_clips]) or "<p>No clips yet. Go live and get some hype in chat!</p>"}
+            </div>
+
+            <p style="text-align: center; color: #666; margin-top: 40px;">
+                Powered by Grok • Clips auto-saved in /processed folder
+            </p>
+        </div>
     </body>
     </html>
     """
@@ -54,5 +63,4 @@ async def dashboard(request: Request):
 if __name__ == "__main__":
     import uvicorn
     print("🚀 KickHighlightBot is running!")
-    print("Dashboard: http://localhost:8000")
     uvicorn.run(app, host="0.0.0.0", port=8000)
