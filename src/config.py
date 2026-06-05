@@ -9,3 +9,4 @@ class Config:
         self.tiktok_username = "kchallin🌺"
         self.openai_key = os.getenv("OPENAI_API_KEY")
         self.highlight_threshold = os.getenv("HIGHLIGHT_THRESHOLD", "medium")
+        self.discord_webhook = os.getenv("DISCORD_WEBHOOK")
