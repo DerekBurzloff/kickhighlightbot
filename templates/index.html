@@ -3,29 +3,14 @@
 <head>
     <title>KickHighlightBot</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #111; color: white; }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 60px; background: #0a0a0a; color: #fff; }
         h1 { color: #00ff88; }
-        .status { font-size: 28px; margin: 30px; }
-        button { padding: 20px 40px; margin: 15px; font-size: 20px; border: none; border-radius: 12px; cursor: pointer; }
-        .start { background: #00cc00; color: white; }
-        .stop { background: #cc0000; color: white; }
+        .status { font-size: 28px; margin: 40px; padding: 20px; background: #1a1a1a; border-radius: 12px; }
     </style>
 </head>
 <body>
     <h1>🚀 KickHighlightBot</h1>
     <div class="status">Status: <strong>{{ status }}</strong></div>
-    <button class="start" onclick="startBot()">▶️ START BOT</button>
-    <button class="stop" onclick="stopBot()">⛔ STOP BOT</button>
-
-    <script>
-        async function startBot() {
-            await fetch('/start', {method: 'POST'});
-            location.reload();
-        }
-        async function stopBot() {
-            await fetch('/stop', {method: 'POST'});
-            location.reload();
-        }
-    </script>
+    <p>Basic mode active. Full features coming soon.</p>
 </body>
 </html>
