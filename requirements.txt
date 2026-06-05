@@ -1,8 +1,4 @@
 fastapi
 uvicorn[standard]
-python-dotenv
-requests
-websocket-client
-openai
 jinja2
-better-profanity
+python-dotenv
