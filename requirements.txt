@@ -4,8 +4,8 @@ python-dotenv
 requests
 websocket-client
 openai
-whisper
-ffmpeg-python
-selenium
-webdriver-manager
 jinja2
+redis
+celery[redis]
+pydantic
+better-profanity
