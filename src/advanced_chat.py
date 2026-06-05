@@ -1,43 +1,42 @@
-
+import re
+import time
 from collections import defaultdict
 
-import time
-
-from src.config import Config
-
 class AdvancedChat:
-
     def __init__(self):
+        self.bot_patterns = [
+            r"^![\w]+",           # Common bot commands (!play, !rank, etc.)
+            r"^\s*\d+\s*$",       # Just numbers (some bots spam)
+            r"^(follow|sub|raid|clip|discord)",  # Common bot phrases
+            r"bot$",              # Username ends with "bot"
+        ]
+        self.known_bots = {"nightbot", "streamlabs", "streamelements", "moobot", "wizebot"}
+        self.responses = [
+            "👋 Hey there bot!",
+            "🤖 Bot detected! What's up?",
+            "🔄 Automated response activated",
+            "💬 Human or bot? 😏"
+        ]
+        self.last_response = {}
 
-        self.config = Config()
-
-        self.active_users = defaultdict(lambda: {"last_seen": 0, "reactions": 0})
-
-        self.reaction_emotes = ["🔥", "👑", "💀", "😂", " Pog", "Clap", "Hype"]
-
-    def process_message(self, username: str, message: str):
-
-        now = time.time()
-
-        self.active_users[username]["last_seen"] = now
-
+    def is_bot(self, username: str, message: str) -> bool:
+        username_lower = username.lower()
+        if username_lower in self.known_bots:
+            return True
         
+        for pattern in self.bot_patterns:
+            if re.search(pattern, message.lower()):
+                return True
+        return False
 
-        # Count reactions
-
-        reaction_count = sum(1 for emote in self.reaction_emotes if emote.lower() in message.lower())
-
-        if reaction_count > 0:
-
-            self.active_users[username]["reactions"] += reaction_count
-
-            print(f"🎉 Reaction from {username}: {message}")
-
-        # Return presence summary every 10 messages
-
-        if len(self.active_users) % 10 == 0:
-
-            print(f"👥 Active chatters: {len([u for u in self.active_users if now - self.active_users[u]['last_seen'] < 300])}")
-
-        return {"action": "allow", "presence": len(self.active_users)}
-
+    def respond_to_bot(self, username: str, message: str):
+        now = time.time()
+        if username in self.last_response and now - self.last_response[username] < 30:
+            return None  # Rate limit responses
+        
+        self.last_response[username] = now
+        import random
+        response = random.choice(self.responses)
+        print(f"🤖 Bot detected ({username}): {message}")
+        print(f"💬 Responding: {response}")
+        return response
