@@ -11,7 +11,7 @@ templates = Jinja2Templates(directory="templates")
 async def dashboard(request: Request):
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "status": "🟢 Bot is Ready (Basic Mode)"
+        "status": "🟢 Online - Basic Mode"
     })
 
 if __name__ == "__main__":
