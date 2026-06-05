@@ -1,27 +1,30 @@
 from fastapi import FastAPI
 import uvicorn
+import threading
+import time
 from src.config import Config
-from src.highlight_detector import HighlightDetector
-from src.clip_processor import ClipProcessor
-from src.kick_monitor import KickMonitor
+from src.orchestrator import Orchestrator
 
 app = FastAPI(title="KickHighlightBot")
 
 config = Config()
-detector = HighlightDetector()
-processor = ClipProcessor()
-monitor = KickMonitor()
+orchestrator = Orchestrator()
 
 @app.get("/")
 async def root():
-    return {
-        "status": "🟢 Online",
-        "channel": config.kick_username,
-        "game": "Rainbow Six Siege",
-        "message": "Bot is monitoring for highlights!"
-    }
+    return {"status": "🟢 Online", "channel": config.kick_username}
+
+def background_loop():
+    print("🚀 Starting full autonomous loop...")
+    while True:
+        orchestrator.run_cycle()
+        time.sleep(15)  # Check every 15 seconds
 
 if __name__ == "__main__":
+    # Start background thread
+    thread = threading.Thread(target=background_loop, daemon=True)
+    thread.start()
+    
     print("🚀 KickHighlightBot for kaesonnguns is running!")
     print("Dashboard → http://localhost:8000")
     uvicorn.run(app, host="0.0.0.0", port=8000)
