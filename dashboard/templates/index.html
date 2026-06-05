@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KickHighlightBot Dashboard</title>
     <style>
-        body { font-family: Arial; background: #0f0f0f; color: white; padding: 20px; }
-        h1 { color: #00ff00; }
-        .clip { margin: 10px 0; padding: 10px; background: #1f1f1f; border-radius: 8px; }
+        body { font-family: system-ui; background: #0a0a0a; color: #fff; padding: 20px; margin: 0; }
+        h1 { color: #00ff9d; }
+        .status { color: #00ff00; font-weight: bold; }
+        .clip { background: #1f1f1f; padding: 12px; margin: 8px 0; border-radius: 8px; }
+        .clip a { color: #00ccff; text-decoration: none; }
+        .refresh { padding: 10px 20px; background: #00ff9d; color: black; border: none; border-radius: 6px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h1>🚀 KickHighlightBot</h1>
     <p><strong>Channel:</strong> {{ channel }} (Rainbow Six Siege)</p>
     <p><strong>TikTok:</strong> @{{ tiktok }}</p>
-    <p><strong>Status:</strong> {{ status }}</p>
+    <p><strong>Status:</strong> <span class="status">{{ status }}</span></p>
 
-    <h2>Recent Clips</h2>
+    <h2>📼 Recent Clips ({{ recent_clips|length }})</h2>
     {% if recent_clips %}
         {% for clip in recent_clips %}
         <div class="clip">
-            📹 {{ clip }}
+            📹 <a href="/processed/{{ clip }}" target="_blank">{{ clip }}</a>
         </div>
         {% endfor %}
     {% else %}
-        <p>No clips yet. Run some tests!</p>
+        <p>No clips yet. Start streaming and get some hype!</p>
     {% endif %}
+
+    <button class="refresh" onclick="location.reload()">Refresh Clips</button>
 </body>
 </html>

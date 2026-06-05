@@ -10,11 +10,10 @@ config = Config()
 
 @app.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request):
-    # Get recent clips
     clips_dir = "processed"
     recent_clips = []
     if os.path.exists(clips_dir):
-        recent_clips = [f for f in os.listdir(clips_dir) if f.endswith(".mp4")][-5:]  # last 5 clips
+        recent_clips = sorted([f for f in os.listdir(clips_dir) if f.endswith(".mp4")], reverse=True)[:8]
 
     return templates.TemplateResponse("index.html", {
         "request": request,
