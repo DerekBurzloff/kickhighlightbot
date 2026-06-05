@@ -5,6 +5,3 @@ requests
 websocket-client
 openai
 jinja2
-redis
-celery[redis]
-pydantic
