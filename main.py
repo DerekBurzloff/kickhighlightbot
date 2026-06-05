@@ -1,14 +1,18 @@
 from fastapi import FastAPI
 import uvicorn
 from src.config import Config
-from dashboard.app import dashboard_app  # Import the dashboard
 
 app = FastAPI(title="KickHighlightBot")
 
 config = Config()
 
-# Mount the dashboard
-app.mount("/", dashboard_app)
+@app.get("/")
+async def root():
+    return {
+        "status": "🟢 Online",
+        "channel": config.kick_username,
+        "message": "Bot is running! Check recent clips in /processed folder"
+    }
 
 if __name__ == "__main__":
     print("🚀 KickHighlightBot for kaesonnguns is running!")
